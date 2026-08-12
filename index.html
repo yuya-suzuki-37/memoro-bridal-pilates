@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>30日間ピラティスブートキャンプ｜Memoro Bridal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="bridal.css?v=4" />
+</head>
+<body>
+
+<!-- ▼ 受講者認証ゲート（本番URL。ローカル確認時は api:'demo'）▼ -->
+<script>window.MEMORO_AUTH={ api:'https://memoro-auth.yuya-suzuki-37.workers.dev', product:'pilates', title:'30日間 ピラティス ブートキャンプ' }</script>
+<script src="gate.js"></script>
+<!-- ▲ 受講者認証ゲート ▲ -->
+
+<!-- ▼ ブートキャンプ識別バナー（自己完結・命名規則「30日間〇〇ブートキャンプ」） -->
+<style>
+.bc-banner{text-align:center;background:linear-gradient(180deg,#f3ece1,#fbf8f5);border-bottom:1px solid #ece5dd;padding:12px 20px 14px;font-family:'Shippori Mincho','Noto Serif JP',serif}
+.bc-banner .bc-eyebrow{display:block;font-family:'Noto Sans JP',system-ui,sans-serif;font-size:10px;letter-spacing:.32em;font-weight:700;color:#a8863f;margin-bottom:6px}
+.bc-banner .bc-title{font-weight:700;font-size:clamp(1.02rem,3.6vw,1.22rem);letter-spacing:.08em;color:#3f3a35}
+.bc-banner .bc-title .bc-ico{margin-right:.4em}
+.bc-banner .bc-title b{color:#c2a25f;font-weight:700}
+.photo-slot{cursor:pointer}
+.photo-slot input[type=file].sr-file{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.dx-banner{background:linear-gradient(135deg,#f3ece1,#fbf6ee);border:1.5px solid #d9c39a;border-radius:14px;padding:16px 18px;margin-bottom:18px;display:flex;flex-direction:column;gap:6px}
+.dx-banner-title{font-weight:700;color:#a8863f;font-size:14px}
+.dx-banner-body{font-size:13px;color:#6a5f56;line-height:1.7}
+</style>
+<div class="bc-banner">
+  <span class="bc-eyebrow">30-DAY PILATES BOOTCAMP</span>
+  <span class="bc-title"><span class="bc-ico">🌿</span>30日間<b>ピラティス</b>ブートキャンプ</span>
+</div>
+
+<header class="app-header">
+  <div class="brand">
+    <span class="brand-mark">P</span>
+    <span class="brand-name">ピラティスブートキャンプ</span>
+  </div>
+</header>
+
+<!-- ===== 入口 ===== -->
+<section id="setup" class="screen active">
+  <div class="hero">
+    <p class="hero-sub">Your most beautiful day</p>
+    <h1 class="hero-title">30日間ピラティス<br>ブートキャンプ</h1>
+    <p class="hero-lead">あなたの姿勢と気になる部位に合わせて、<br>ピラティス中心の“あなた専用”30日プログラムを組み立てます。</p>
+  </div>
+
+  <div class="steps-guide">
+    <div class="step-g"><span class="step-n">1</span><span>理想と部位を<br>教える</span></div>
+    <div class="step-g"><span class="step-n">2</span><span>姿勢を診断<br>写真orチェック</span></div>
+    <div class="step-g"><span class="step-n">3</span><span>見立て＆<br>30日が完成</span></div>
+  </div>
+
+  <div class="card setup-card">
+    <label class="field">
+      <span class="field-label"><span class="step-badge">STEP 1</span>挙式・前撮りの日</span>
+      <input type="date" id="wedding-date" class="input" />
+    </label>
+    <p id="countdown" class="countdown"></p>
+
+    <div class="field">
+      <span class="field-label"><span class="step-badge">STEP 2</span>なりたい理想の姿</span>
+      <div class="sub-label">着たいドレス</div>
+      <div id="dress-grid" class="chip-grid"></div>
+      <div class="sub-label">なりたい雰囲気</div>
+      <div id="mood-grid" class="chip-grid"></div>
+    </div>
+
+    <div class="field">
+      <span class="field-label"><span class="step-badge">STEP 3</span>特に磨きたい部位 <em>（複数選択できます）</em></span>
+      <div id="parts-grid" class="parts-grid"></div>
+    </div>
+
+    <div class="field">
+      <span class="field-label"><span class="step-badge">STEP 4</span>姿勢を知る（A. 写真で診断）<em>横向き全身がおすすめ</em></span>
+      <div class="posture-photo">
+        <div class="photo-slots">
+          <div class="photo-slot" data-photo-trigger="photo-side">
+            <input type="file" id="photo-side" accept="image/*" class="sr-file" />
+            <span class="photo-ph" id="ph-side">＋ 側面写真 <em>必須</em></span>
+          </div>
+          <div class="photo-slot" data-photo-trigger="photo-front">
+            <input type="file" id="photo-front" accept="image/*" class="sr-file" />
+            <span class="photo-ph" id="ph-front">＋ 正面写真 <em>任意</em></span>
+          </div>
+        </div>
+        <button type="button" id="btn-diagnose" class="btn btn-diagnose" disabled>この写真で姿勢を診断する</button>
+        <p id="diagnose-status" class="diagnose-status"></p>
+        <p class="photo-note">📷 写真はブラウザ内だけで解析され、外部に送信されません。（姿勢スクリーニングであり医学的診断ではありません）</p>
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="field-label"><span class="step-sub">または</span>姿勢を知る（B. セルフチェック）<em>写真がなくてもOK</em></span>
+      <div id="posture-check" class="posture-check"></div>
+    </div>
+
+    <button id="btn-start" class="btn btn-primary btn-block" disabled>▶ 入力できたら｜あなたへの見立てを見る</button>
+    <p class="setup-note">写真で姿勢を自動判定する本格診断（posture-tool連携）も使えます。</p>
+  </div>
+</section>
+
+<!-- ===== 見立て（カウンセリング）===== -->
+<section id="advice" class="screen">
+  <div class="advice-wrap">
+    <p class="advice-eyebrow">Your Personal Counseling</p>
+    <h2 class="advice-h">あなたへの見立て</h2>
+    <div id="advice-tags" class="advice-tags"></div>
+    <div class="card advice-card">
+      <div class="advice-block"><span class="advice-label">現 状</span><p id="adv-current"></p></div>
+      <div class="advice-block"><span class="advice-label">理 想</span><p id="adv-ideal"></p></div>
+      <div class="advice-block"><span class="advice-label">30日の設計</span><p id="adv-design"></p></div>
+      <p id="adv-future" class="advice-future"></p>
+    </div>
+    <button id="btn-begin" class="btn btn-primary btn-block">この内容で30日プログラムを始める</button>
+    <button id="btn-back-setup" class="btn btn-ghost btn-block">入力に戻る</button>
+  </div>
+</section>
+
+<!-- ===== メイン ===== -->
+<section id="app" class="screen">
+  <nav class="tabbar">
+    <button class="tab active" data-view="today">今日のレッスン</button>
+    <button class="tab" data-view="calendar">30日カレンダー</button>
+    <button class="tab" data-view="change">変化の記録</button>
+  </nav>
+
+  <div id="personal-summary" class="personal-summary"></div>
+
+  <!-- 今日 -->
+  <div id="view-today" class="view active">
+    <div class="today-head card">
+      <div class="today-topline">
+        <span id="today-daynum" class="today-daynum">DAY 01</span>
+        <span id="today-countdown" class="today-countdown"></span>
+      </div>
+      <div id="today-phase" class="today-phase"></div>
+      <div id="today-theme" class="today-theme"></div>
+    </div>
+    <div id="today-grid" class="ex-grid"></div>
+    <button id="btn-complete" class="btn btn-primary btn-block">今日のレッスンを完了</button>
+    <section id="today-habits" class="today-habits"></section>
+  </div>
+
+  <!-- カレンダー -->
+  <div id="view-calendar" class="view">
+    <div class="card progress-wrap">
+      <div class="progress-stats">
+        <span id="progress-count" class="progress-count">0 / 30 日</span>
+        <span id="progress-streak" class="progress-streak">🔥 0日継続</span>
+      </div>
+      <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+    </div>
+    <div class="phase-tabs">
+      <button class="phase-tab active" data-phase="1">Phase 1<em>解放</em></button>
+      <button class="phase-tab" data-phase="2">Phase 2<em>活性化</em></button>
+      <button class="phase-tab" data-phase="3">Phase 3<em>仕上げ</em></button>
+    </div>
+    <div id="calendar-grid" class="calendar-grid"></div>
+    <button id="btn-reset" class="btn btn-ghost btn-block">設定をやり直す</button>
+  </div>
+
+  <!-- 変化の記録 -->
+  <div id="view-change" class="view"></div>
+</section>
+
+<!-- モーダル -->
+<div id="modal" class="modal" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-content" id="modal-content"></div>
+</div>
+
+<footer class="disclaimer">
+  本プログラムは健康・美容の一般的な情報提供であり、医療行為・診断・治療ではありません。<strong>特定の部位だけの脂肪を落とすことはできません</strong>——姿勢を整え引き締めて“美しく見せる”ためのプログラムです。効果には個人差があります。痛み・違和感があるときは中止し、妊娠中・持病のある方は必ず医師にご相談ください。
+</footer>
+
+<script src="lib/libheif-bundle.js"></script>
+<script type="module" src="bridal-ui.js?v=7"></script>
+</body>
+</html>

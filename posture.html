@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PostureLab ATELIER｜AI姿勢分析</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Shippori+Mincho:wght@400;500;600;700;800&family=Noto+Serif+JP:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=8" />
+<link rel="stylesheet" href="redesign.css?v=6" />
+</head>
+<body class="lx">
+
+<!-- ===== 上部アナウンスバー ===== -->
+<div class="lx-topbar">AI POSTURE ANALYSIS ATELIER — あなたの立ち姿を、美しく読み解く。</div>
+
+<!-- ===== HEADER ===== -->
+<header class="lx-header">
+  <a class="lx-logo" href="#top">
+    <span class="lx-logo-mark">P</span>
+    <span class="lx-logo-text">PostureLab<em>Atelier</em></span>
+  </a>
+  <nav class="lx-nav">
+    <a href="#about">特徴</a>
+    <a href="#upload-section" class="js-reveal-upload">診断する</a>
+    <button id="btn-mydata" class="lx-nav-btn">マイデータ</button>
+  </nav>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="lx-hero" id="top">
+  <div class="lx-hero-bg" aria-hidden="true"></div>
+  <div class="lx-hero-inner">
+    <p class="lx-hero-eyebrow">Beauty begins with posture</p>
+    <h1 class="lx-hero-title">
+      立ち姿は、<br><i>いちばん雄弁な</i><br>あなたの名刺。
+    </h1>
+    <p class="lx-hero-lead">
+      横向きと正面、たった2枚の写真から。<br>
+      AIが33の身体ポイントを読み解き、あなたの“今”を静かに可視化します。
+    </p>
+    <a href="#upload-section" class="lx-btn lx-btn-gold js-reveal-upload">無料で姿勢を分析する</a>
+  </div>
+</section>
+
+<!-- ===== ABOUT (3つの価値) ===== -->
+<section class="lx-about" id="about">
+  <div class="lx-about-item">
+    <span class="lx-about-no">01</span>
+    <h3>科学に基づく可視化</h3>
+    <p>臨床指標（CVA・HKA等）をベースに、あなたの姿勢バランスと歪みの傾向を数値とビジュアルで提示します。</p>
+  </div>
+  <div class="lx-about-item">
+    <span class="lx-about-no">02</span>
+    <h3>あなただけの処方</h3>
+    <p>姿勢タイプとお悩みから、ゆるめる/鍛えるべき部位を特定。560以上のメニューから最適な動きを選びます。</p>
+  </div>
+  <div class="lx-about-item">
+    <span class="lx-about-no">03</span>
+    <h3>30日で書き換える</h3>
+    <p>解放→活性化→定着の3フェーズ。1日10〜15分の積み重ねで、無理なく“美姿勢”を習慣に。</p>
+  </div>
+</section>
+
+<!-- ===== START / UPLOAD ===== -->
+<section class="lx-start" id="upload-section" hidden>
+  <div class="lx-sec-head">
+    <span class="lx-sec-no">STEP 01</span>
+    <h2 class="lx-sec-title">写真をアップロード</h2>
+    <p class="lx-sec-sub">横向き・正面の2枚で、あなたの姿勢を静かに読み解きます。データは端末内で処理され、外部に送信されません。</p>
+  </div>
+
+  <div class="lx-upload-panel">
+    <div class="upload-grid">
+      <!-- SIDE -->
+      <div class="upload-slot" id="slot-side">
+        <input type="file" id="file-side" accept="image/*" class="visually-hidden" />
+        <label for="file-side" class="upload-drop" data-target="file-side">
+          <div class="drop-illust">
+            <svg viewBox="0 0 80 110" aria-hidden="true">
+              <path d="M40 18 Q35 12 30 18 Q26 22 28 30 L26 50 Q22 58 25 70 L30 95 L35 105 L45 105 L50 95 L52 70 Q55 58 50 50 L52 30 Q54 22 50 18 Q45 12 40 18 Z" fill="none" stroke="#B08D4F" stroke-width="1.5" stroke-linejoin="round"/>
+              <circle cx="40" cy="18" r="8" fill="none" stroke="#B08D4F" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="drop-title-row">
+            <span class="drop-title">横向きの写真</span>
+            <span class="drop-required">必須</span>
+          </div>
+          <div class="upload-icon-circle">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 16V6 M6 12l6-6 6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="drop-sub">JPG / PNG　全身がフレームに収まるもの</div>
+        </label>
+        <div class="preview" id="preview-side" hidden>
+          <canvas id="canvas-side"></canvas>
+        </div>
+      </div>
+      <!-- FRONT -->
+      <div class="upload-slot" id="slot-front">
+        <input type="file" id="file-front" accept="image/*" class="visually-hidden" />
+        <label for="file-front" class="upload-drop" data-target="file-front">
+          <div class="drop-illust">
+            <svg viewBox="0 0 80 110" aria-hidden="true">
+              <circle cx="40" cy="18" r="8" fill="none" stroke="#B08D4F" stroke-width="1.5"/>
+              <path d="M25 32 Q40 28 55 32 L58 60 Q60 75 55 95 L50 105 L30 105 L25 95 Q20 75 22 60 Z" fill="none" stroke="#B08D4F" stroke-width="1.5" stroke-linejoin="round"/>
+              <line x1="40" y1="32" x2="40" y2="100" stroke="#B08D4F" stroke-width="1" stroke-dasharray="2 2"/>
+            </svg>
+          </div>
+          <div class="drop-title-row">
+            <span class="drop-title">正面の写真</span>
+            <span class="drop-required">推奨</span>
+          </div>
+          <div class="upload-icon-circle">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 16V6 M6 12l6-6 6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="drop-sub">JPG / PNG　肩・骨盤・膝の左右差を解析</div>
+        </label>
+        <div class="preview" id="preview-front" hidden>
+          <canvas id="canvas-front"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- 症状 -->
+    <div class="symptom-block">
+      <div class="symptom-head">
+        <h3>気になる症状・お悩み</h3>
+        <p class="muted">該当するものを選択。姿勢診断と組み合わせ、あなた専用のケアを提案します。</p>
+      </div>
+      <div class="symptom-chips" id="symptom-chips">
+        <label class="chip"><input type="checkbox" value="shoulderStiff"><span>肩こり</span></label>
+        <label class="chip"><input type="checkbox" value="neckStiff"><span>首こり・頭痛</span></label>
+        <label class="chip"><input type="checkbox" value="lowBackPain"><span>腰痛</span></label>
+        <label class="chip"><input type="checkbox" value="aptAware"><span>反り腰の自覚</span></label>
+        <label class="chip"><input type="checkbox" value="rsAware"><span>巻き肩の自覚</span></label>
+        <label class="chip"><input type="checkbox" value="kyphosisAware"><span>猫背の自覚</span></label>
+        <label class="chip"><input type="checkbox" value="kneePain"><span>膝の痛み</span></label>
+        <label class="chip"><input type="checkbox" value="oLeg"><span>O脚</span></label>
+        <label class="chip"><input type="checkbox" value="xLeg"><span>X脚</span></label>
+        <label class="chip"><input type="checkbox" value="scoliosisAware"><span>側弯の自覚</span></label>
+        <label class="chip"><input type="checkbox" value="shallowBreath"><span>呼吸が浅い</span></label>
+        <label class="chip"><input type="checkbox" value="swelling"><span>浮腫み・むくみ</span></label>
+        <label class="chip"><input type="checkbox" value="coldness"><span>冷え性</span></label>
+        <label class="chip"><input type="checkbox" value="fatigue"><span>疲れやすい</span></label>
+        <label class="chip"><input type="checkbox" value="hipImbalance"><span>左右の歪み</span></label>
+        <label class="chip"><input type="checkbox" value="bellyOut"><span>下腹ぽっこり</span></label>
+      </div>
+      <div class="symptom-note">
+        <label for="symptom-free">その他のお悩み（任意）</label>
+        <textarea id="symptom-free" rows="2" placeholder="例：朝起きると腰がだるい／長時間立っていると膝が痛む など"></textarea>
+      </div>
+    </div>
+
+    <div class="lx-tips">
+      <span>📷 3〜4m離れて全身を</span>
+      <span>👗 体のラインがわかる服で</span>
+      <span>💡 自然光・シンプルな背景</span>
+      <span>🧍 普段通りの自然な立ち姿</span>
+    </div>
+
+    <div class="actions lx-actions">
+      <button class="lx-btn lx-btn-green" id="btn-analyze" disabled>
+        <span class="btn-label">姿勢を解析する</span>
+        <svg viewBox="0 0 24 24" width="16" height="16" class="btn-arrow"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="loader" id="loader" hidden>
+        <div class="loader-spin"></div>
+        <span id="loader-text">モデルを初期化しています…</span>
+      </div>
+    </div>
+    <p class="lx-disclaimer">本ツールは姿勢の<strong>スクリーニング</strong>であり医学的診断ではありません。痛みや既往症がある場合は専門家にご相談ください。</p>
+  </div>
+</section>
+
+<!-- ===== RESULTS ===== -->
+<main id="results" hidden>
+
+  <!-- SUMMARY -->
+  <section class="lx-section">
+    <div class="lx-sec-head">
+      <span class="lx-sec-no">REPORT 01</span>
+      <h2 class="lx-sec-title">あなたの姿勢サマリー</h2>
+      <p class="lx-sec-sub">AI解析によるスコアと姿勢タイプ</p>
+    </div>
+    <div class="summary-grid">
+      <div class="score-wrap">
+        <div class="score-ring" id="score-ring">
+          <svg viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="52" fill="none" stroke="#EAE2D2" stroke-width="10"/>
+            <circle cx="60" cy="60" r="52" fill="none" stroke="url(#gscore)" stroke-width="10" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7" id="score-arc" transform="rotate(-90 60 60)"/>
+            <defs>
+              <linearGradient id="gscore" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#B08D4F"/>
+                <stop offset="100%" stop-color="#2F4A3E"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="score-num"><span id="score-value">--</span><small>/100</small></div>
+        </div>
+        <div class="score-label">
+          <div class="score-grade" id="score-grade">--</div>
+          <div class="score-desc" id="score-desc">解析中…</div>
+        </div>
+      </div>
+      <div class="type-card">
+        <div class="type-eyebrow">あなたの姿勢タイプ</div>
+        <div class="type-name" id="posture-type">--</div>
+        <div class="type-desc" id="posture-type-desc">--</div>
+        <div class="type-tags" id="posture-type-tags"></div>
+      </div>
+      <div class="metrics" id="metrics-list"></div>
+    </div>
+    <div class="overlay-grid">
+      <div class="overlay-pane">
+        <div class="pane-title">横向き解析オーバーレイ</div>
+        <canvas id="overlay-side"></canvas>
+        <div class="legend">
+          <span><i style="background:#B08D4F"></i>基準線</span>
+          <span><i style="background:#2F4A3E"></i>逸脱</span>
+          <span><i style="background:#6FA383"></i>正常域</span>
+        </div>
+      </div>
+      <div class="overlay-pane" id="front-pane">
+        <div class="pane-title">正面解析オーバーレイ</div>
+        <canvas id="overlay-front"></canvas>
+        <div class="legend">
+          <span><i style="background:#B08D4F"></i>水平基準</span>
+          <span><i style="background:#C9A14E"></i>左右差</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEMS -->
+  <section class="lx-section">
+    <div class="lx-sec-head">
+      <span class="lx-sec-no">REPORT 02</span>
+      <h2 class="lx-sec-title">気になる姿勢のポイント</h2>
+      <p class="lx-sec-sub">解析＋お悩みから、ゆるめたい/引き締めたい部位を表示します</p>
+    </div>
+    <div id="symptom-summary" class="symptom-summary" hidden></div>
+    <div class="problems-list" id="problems-list"></div>
+  </section>
+
+  <!-- KNOWLEDGE -->
+  <section class="lx-section knowledge-card">
+    <div class="lx-sec-head">
+      <span class="lx-sec-no">REPORT 03</span>
+      <h2 class="lx-sec-title">姿勢の知識</h2>
+      <p class="lx-sec-sub">あなたの姿勢を理解するための、知っておきたいこと</p>
+    </div>
+    <div class="knowledge-grid" id="knowledge-grid"></div>
+  </section>
+
+  <!-- COURSE -->
+  <section class="lx-section course-card-section" id="course-section">
+    <div class="lx-sec-head">
+      <span class="lx-sec-no">STEP 02</span>
+      <h2 class="lx-sec-title">コースを選ぶ</h2>
+      <p class="lx-sec-sub">4つの専門コース＋AIおまかせから選択。いつでも切替できます。</p>
+    </div>
+    <div class="course-recommend" id="course-recommend"></div>
+    <div class="course-grid" id="course-grid"></div>
+  </section>
+
+  <!-- TODAY -->
+  <section class="lx-section today-card">
+    <div class="lx-sec-head">
+      <span class="lx-sec-no">STEP 03</span>
+      <h2 class="lx-sec-title">今日のあなた専用メニュー</h2>
+      <p class="lx-sec-sub">セルフケア2種 ＋ トレーニング2種（約10〜15分）</p>
+    </div>
+    <div class="today-grid" id="today-grid"></div>
+  </section>
+
+  <!-- 30 DAYS -->
+  <section class="lx-section program-card">
+    <div class="lx-sec-head">
+      <span class="lx-sec-no">STEP 04</span>
+      <h2 class="lx-sec-title">30日間 美姿勢プログラム</h2>
+      <p class="lx-sec-sub">Phase 1: 解放 ／ Phase 2: 活性化 ／ Phase 3: 定着</p>
+    </div>
+    <div class="phase-tabs" id="phase-tabs">
+      <button class="phase-tab active" data-phase="1">Phase 1<small>解放 Day1-10</small></button>
+      <button class="phase-tab" data-phase="2">Phase 2<small>活性化 Day11-20</small></button>
+      <button class="phase-tab" data-phase="3">Phase 3<small>定着 Day21-30</small></button>
+    </div>
+    <div class="program-grid" id="program-grid"></div>
+    <div class="actions lx-actions" style="justify-content:flex-end; margin-top:24px;">
+      <button class="lx-btn lx-btn-ghost" id="btn-print">プログラムを印刷</button>
+      <button class="lx-btn lx-btn-green" id="btn-restart"><span class="btn-label">もう一度解析する</span></button>
+    </div>
+  </section>
+</main>
+
+<!-- ===== MODAL ===== -->
+<div class="modal" id="modal" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-panel">
+    <button class="modal-close" data-close aria-label="閉じる">×</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<!-- ===== MY DATA ===== -->
+<div class="mydata" id="mydata" hidden>
+  <div class="mydata-backdrop" data-close-md></div>
+  <div class="mydata-panel">
+    <button class="modal-close" data-close-md aria-label="閉じる">×</button>
+    <div id="mydata-body"></div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="lx-footer">
+  <div class="lx-foot-brand">PostureLab<em>Atelier</em></div>
+  <div class="lx-foot-links"><span>プライバシーポリシー</span><span>利用規約</span><span>免責事項</span></div>
+  <p class="lx-foot-disc">本ツールは教育・セルフケア目的の参考情報であり、医師・理学療法士による診断・治療を代替するものではありません。痛みや既往症がある場合は専門家にご相談ください。</p>
+  <div class="lx-foot-copy">© 2026 PostureLab Atelier</div>
+</footer>
+
+<script>
+  // 「分析する」CTA/ナビを押したら、アップロード部を表示してスクロール
+  document.querySelectorAll('.js-reveal-upload').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      var s = document.getElementById('upload-section');
+      if (s){ s.hidden = false; s.scrollIntoView({ behavior:'smooth', block:'start' }); }
+    });
+  });
+</script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
