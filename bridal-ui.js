@@ -332,7 +332,7 @@ function partsToProblems(parts) {
 }
 
 // ---------- 見立て（カウンセリング）----------
-function start() {
+async function start() {
   state.problemKeys = state.diagnosedKeys.length ? [...new Set([...state.diagnosedKeys, ...state.postureChecks])]
     : state.postureChecks.length ? [...state.postureChecks]
       : partsToProblems(state.selectedParts);
@@ -354,8 +354,39 @@ function start() {
     weddingDays: wd,
   });
   save();
+  await runAnalyzing();
   renderAdvice();
   showScreen('advice');
+}
+
+// 解析中の演出（進捗リング＋項目チェック）— 診断→見立ての"間"を作り込む（kogaoと統一）
+function runAnalyzing() {
+  return new Promise(resolve => {
+    const items = ['姿勢のクセ', '気になる部位', '理想のシルエット', '30日の組み立て', 'メニューの最適化'];
+    const ov = document.createElement('div');
+    ov.className = 'analyzing-ov';
+    ov.innerHTML = `
+      <div class="az-card">
+        <div class="az-ring">
+          <svg viewBox="0 0 80 80"><circle class="az-track" cx="40" cy="40" r="34"/><circle class="az-prog" cx="40" cy="40" r="34"/></svg>
+          <span class="az-pct">0%</span>
+        </div>
+        <p class="az-title">あなたの姿勢を解析しています</p>
+        <ul class="az-list">${items.map((t) => `<li><span class="az-check"></span>${t}</li>`).join('')}</ul>
+      </div>`;
+    document.body.appendChild(ov);
+    requestAnimationFrame(() => ov.classList.add('in'));
+    const lis = ov.querySelectorAll('.az-list li');
+    lis.forEach((li, i) => setTimeout(() => li.classList.add('done'), 380 + i * 330));
+    const pctEl = ov.querySelector('.az-pct'), progEl = ov.querySelector('.az-prog');
+    let p = 0;
+    const tick = setInterval(() => {
+      p = Math.min(100, p + 2); pctEl.textContent = p + '%';
+      progEl.style.strokeDashoffset = String(214 * (1 - p / 100));
+      if (p >= 100) clearInterval(tick);
+    }, 34);
+    setTimeout(() => { ov.classList.add('out'); setTimeout(() => { ov.remove(); resolve(); }, 400); }, 2200);
+  });
 }
 function renderAdvice() {
   const a = state.advice;
@@ -365,7 +396,7 @@ function renderAdvice() {
   $('#adv-design').textContent = a.design;
   $('#adv-future').textContent = a.future;
   const tags = [...(a.postureNames || []), ...(a.partNames || [])];
-  $('#advice-tags').innerHTML = tags.map(t => `<span class="advice-tag">${t}</span>`).join('');
+  $('#advice-tags').innerHTML = tags.map(t => `<span class="dx-chip">${t}</span>`).join('');
 }
 function enterApp() {
   showScreen('app');

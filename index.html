@@ -6,7 +6,7 @@
 <title>30日間ピラティスブートキャンプ｜Memoro Bridal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Kurenaido&family=Parisienne&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="bridal.css?v=4" />
 </head>
 <body>
@@ -44,9 +44,15 @@
 <!-- ===== 入口 ===== -->
 <section id="setup" class="screen active">
   <div class="hero">
-    <p class="hero-sub">Your most beautiful day</p>
-    <h1 class="hero-title">30日間ピラティス<br>ブートキャンプ</h1>
-    <p class="hero-lead">あなたの姿勢と気になる部位に合わせて、<br>ピラティス中心の“あなた専用”30日プログラムを組み立てます。</p>
+    <div class="hero-photo">
+      <div class="hero-bg"></div>
+      <div class="hero-logo">Memoro<small>PILATES CARE</small></div>
+    </div>
+    <div class="hero-text">
+      <p class="hero-script">for your special day</p>
+      <h1 class="hero-catch">式まで、あと<span class="accent">30</span>日。</h1>
+      <p class="hero-hw">あなただけのピラティスを、毎日ひとつ</p>
+    </div>
   </div>
 
   <div class="steps-guide">
@@ -107,9 +113,17 @@
 <!-- ===== 見立て（カウンセリング）===== -->
 <section id="advice" class="screen">
   <div class="advice-wrap">
-    <p class="advice-eyebrow">Your Personal Counseling</p>
-    <h2 class="advice-h">あなたへの見立て</h2>
-    <div id="advice-tags" class="advice-tags"></div>
+    <section class="result-hero">
+      <div class="rh-visual">
+        <img src="images/result-visual.png" alt="" onerror="this.closest('.rh-visual').classList.add('no-img')">
+        <span class="rh-script">your pilates care</span>
+      </div>
+      <div class="rh-body">
+        <p class="announce">YOUR PILATES CARE</p>
+        <h2 class="type-name">あなたへの見立て</h2>
+        <div id="advice-tags" class="dx-chips"></div>
+      </div>
+    </section>
     <div class="card advice-card">
       <div class="advice-block"><span class="advice-label">現 状</span><p id="adv-current"></p></div>
       <div class="advice-block"><span class="advice-label">理 想</span><p id="adv-ideal"></p></div>
