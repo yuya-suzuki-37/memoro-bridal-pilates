@@ -437,9 +437,17 @@ function exerciseBadges(ex) {
   if (!hit.length) return '';
   return `<div class="ex-badges">${hit.slice(0, 2).map(k => `<span class="ex-badge">${PROBLEM_LABELS[k] || k}に効く</span>`).join('')}</div>`;
 }
+// 頻出種目は実写フォーム写真を使用（棒人間SVGより"やり方が伝わる"。他種目はSVGのまま＝ハイブリッド）
+const PHOTO_EXERCISES = new Set(['pl_chest_opener','pl_pelvic_clock','pl_mermaid','pl_thread_needle','pl_swan_arms','pl_wall_angel','pl_standing_arm_circles','pl_rolldown','pl_spine_twist_supine','pl_imprint','pl_seated_forward','pl_ankle_circle','pl_neck_release','pl_calf_stretch','pl_standing_roll_down','pl_standing_side_bend','pl_chin_tuck','pl_spine_stretch','pl_seal','pl_standing_rollup']);
+function exVisual(ex, cls) {
+  if (PHOTO_EXERCISES.has(ex.id)) {
+    return `<img class="${cls}" src="images/exercises/${ex.id}.png" alt="${ex.name}" loading="lazy">`;
+  }
+  return ex.illustration || '';
+}
 function exerciseCard(ex) {
   return `<div class="ex-card" data-ex="${ex.id}">
-    <div class="ex-illust">${ex.illustration || ''}</div>
+    <div class="ex-illust">${exVisual(ex, 'ex-photo')}</div>
     <div class="ex-info">
       <span class="ex-cat ${catClass(ex)}">${catLabel(ex)}</span>
       <h4 class="ex-name">${ex.name}</h4>
@@ -730,7 +738,7 @@ function openExercise(ex) {
   const ev = evidenceFor(ex);
   openModal(`
     <button class="modal-close" data-close>✕</button>
-    <div class="modal-illust">${ex.illustration || ''}</div>
+    <div class="modal-illust">${exVisual(ex, 'modal-photo')}</div>
     <span class="ex-cat ${catClass(ex)}">${catLabel(ex)}</span>
     <h3 class="modal-title">${ex.name}</h3>
     ${exerciseBadges(ex)}
