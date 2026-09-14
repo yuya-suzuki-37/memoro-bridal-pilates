@@ -445,6 +445,32 @@ function exVisual(ex, cls) {
   }
   return ex.illustration || '';
 }
+// AI生成「連続姿勢＋動きの矢印＋効く筋肉ハイライト」の解説イラストがある種目
+const ANNOTATED_EXERCISES = new Set([
+  // バッチ①
+  'pl_squat_pilates','pl_thread_needle','pl_mermaid','pl_standing_roll_down','pt_glute_bridge','pl_neck_release','pl_breathing',
+  // バッチ②（連続姿勢）
+  'pl_standing_arm_circles','pl_spine_twist_supine','pl_swan_arms','pl_wall_angel','pl_standing_side_bend','pl_seated_forward','pl_standing_chest_expansion','pl_spine_stretch','pl_seal','pl_calf_raise','pl_standing_rollup',
+  // バッチ②（1姿勢＋ハイライト）
+  'pl_relaxation_breath','pl_imprint','pl_chest_opener','pl_ankle_circle','pl_calf_stretch','pl_pelvic_clock','pl_chin_tuck','pl_hundred',
+  // 動作同一（画像コピー）
+  'pt_squat_basic','pl_rolldown',
+]);
+// 「開始→終了」2コマ写真がある種目（詳細モーダルで動きのプロセスを見せる）
+const TWOFRAME_EXERCISES = new Set(['pl_wall_angel']);
+function exVisualModal(ex) {
+  if (ANNOTATED_EXERCISES.has(ex.id)) {
+    return `<img class="annotated-photo" src="images/exercises/annotated/${ex.id}.png" alt="${ex.name}のやり方">`;
+  }
+  if (TWOFRAME_EXERCISES.has(ex.id)) {
+    return `<div class="frame2">
+      <figure><img class="frame2-img" src="images/exercises/2frame/${ex.id}_1.png" alt="はじめの姿勢"><figcaption>① はじめ</figcaption></figure>
+      <div class="frame2-arrow" aria-hidden="true">→</div>
+      <figure><img class="frame2-img" src="images/exercises/2frame/${ex.id}_2.png" alt="動かした姿勢"><figcaption>② うごかす</figcaption></figure>
+    </div>`;
+  }
+  return exVisual(ex, 'modal-photo');
+}
 function exerciseCard(ex) {
   return `<div class="ex-card" data-ex="${ex.id}">
     <div class="ex-illust">${exVisual(ex, 'ex-photo')}</div>
@@ -738,7 +764,7 @@ function openExercise(ex) {
   const ev = evidenceFor(ex);
   openModal(`
     <button class="modal-close" data-close>✕</button>
-    <div class="modal-illust">${exVisual(ex, 'modal-photo')}</div>
+    <div class="modal-illust${ANNOTATED_EXERCISES.has(ex.id) ? ' is-annotated' : ''}">${exVisualModal(ex)}</div>
     <span class="ex-cat ${catClass(ex)}">${catLabel(ex)}</span>
     <h3 class="modal-title">${ex.name}</h3>
     ${exerciseBadges(ex)}
